@@ -1,0 +1,37 @@
+#热部署
+#spring.devtools.restart.enabled=true
+#spring.devtools.restart.additional-paths=src/main/java
+#�Ȳ���
+#spring:
+#    devtools:
+#      restart:
+#        enabled: true
+#        additional-paths: src/main/java
+##
+#    thymeleaf:
+#      mode: LEGACYHTML5
+#日志格式设置
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+#  file: E:\testLog\sell.log
+#  level:
+#    com.company.sell.LoggerTest: debug
+
+
+
+#spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1/sell?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+  jpa:
+    show-sql: true
+    open-in-view: false
+server:
+  servlet:
+    context-path: /sell
+
+
