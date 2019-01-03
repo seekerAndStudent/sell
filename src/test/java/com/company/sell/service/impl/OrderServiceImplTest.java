@@ -1,12 +1,16 @@
 package com.company.sell.service.impl;
 
+import com.company.sell.Enum.OrderStatusEnum;
 import com.company.sell.dataobject.OrderDetail;
 import com.company.sell.dto.OrderDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
@@ -29,23 +33,37 @@ public class OrderServiceImplTest {
 
         //模拟购物车
         List<OrderDetail> orderDetailList = new ArrayList<OrderDetail>();
+
         OrderDetail o1 = new OrderDetail();
         o1.setProductId("123456789");
         o1.setProductQuantity(1);
+
+        OrderDetail o2 = new OrderDetail();
+        o2.setProductId("12345678910");
+        o2.setProductQuantity(1);
+
         orderDetailList.add(o1);
+        orderDetailList.add(o2);
 
         orderDTO.setOrderDetailList(orderDetailList);
 
         OrderDTO resultOrderDto  = orderService.create(orderDTO);
-        log.info("---------【订单完成】----------- result={}",resultOrderDto);
+        log.info("---------【创建订单完成】----------- result={}",resultOrderDto);
     }
 
     @Test
-    public void findOne() {
+    public void findOne() throws Exception{
+        OrderDTO resultOrderDTO = orderService.findOne("1546497171361337778");
+        log.info("---------【查询订单完成】----------- result={}",resultOrderDTO);
+        Assert.assertEquals("1546497171361337778",resultOrderDTO.getOrderId());
     }
 
     @Test
     public void findList() {
+        PageRequest pageRequest = PageRequest.of(0,2);
+        Page<OrderDTO> orderDTOPage = orderService.findList(BUYER_OPENID,pageRequest);
+        log.info("---------【查询订单列表完成】----------- result={}",orderDTOPage);
+        Assert.assertNotEquals(0,orderDTOPage.getTotalElements());
     }
 
     @Test
@@ -54,6 +72,10 @@ public class OrderServiceImplTest {
 
     @Test
     public void cancel() {
+        OrderDTO orderDTO = orderService.findOne("1546496965365283237");
+        orderService.cancel(orderDTO);
+        log.info("---------【查询订单完成】----------- result={}",orderDTO);
+        Assert.assertEquals(OrderStatusEnum.CANCEL.getCode(),orderDTO.getOrderStatus());
     }
 
     @Test
