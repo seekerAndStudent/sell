@@ -33,9 +33,11 @@ public class BuyerProductController {
         List<ProductInfo> productInfoList = productService.findByProductStatus(ProductStatus.UP.getCode());
         //2.查询商品类目
         //传统方法是循环遍历productInfoList查询商品类目
-        //精简方法
+        //精简方法 lambda表达式方法
         List<Integer> categoryTypeList =
-        productInfoList.stream().map(e -> e.getCategoryType()).collect(Collectors.toList());
+        productInfoList.stream()
+                       .map(e -> e.getCategoryType())
+                       .collect(Collectors.toList());
 
         List<ProductCategory> productCategoryList = categoryService.findByCategoryTypeIn(categoryTypeList);
         //3.进行拼接
@@ -49,6 +51,7 @@ public class BuyerProductController {
             for(ProductInfo productInfo : productInfoList){
                 if(productInfo.getCategoryType().equals(category.getCategoryType())){
                     ProductVO productVO = new ProductVO();
+                    //spring提供的BeanUtils类，copyProperties可以将一个对象的属性值拷贝到另一个对象
                     BeanUtils.copyProperties(productInfo,productVO);
                     productVOList.add(productVO);
                 }

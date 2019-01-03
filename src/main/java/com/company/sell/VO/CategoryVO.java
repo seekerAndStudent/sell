@@ -1,5 +1,7 @@
 package com.company.sell.VO;
-
+/*
+* 商品类目的json
+* */
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
