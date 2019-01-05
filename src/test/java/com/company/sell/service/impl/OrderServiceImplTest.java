@@ -1,6 +1,7 @@
 package com.company.sell.service.impl;
 
 import com.company.sell.Enum.OrderStatusEnum;
+import com.company.sell.Enum.PayStatus;
 import com.company.sell.dataobject.OrderDetail;
 import com.company.sell.dto.OrderDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,9 @@ public class OrderServiceImplTest {
 
     @Test
     public void paid() {
+        OrderDTO orderDTO = orderService.findOne("1546487796058655114");
+        OrderDTO result = orderService.paid(orderDTO);
+        Assert.assertEquals(PayStatus.SUCCESS.getCode(),result.getPayStatus());
     }
 
     @Test
@@ -80,5 +84,8 @@ public class OrderServiceImplTest {
 
     @Test
     public void finish() {
+        OrderDTO orderDTO = orderService.findOne("1546487796058655114");
+        OrderDTO result = orderService.finish(orderDTO);
+        Assert.assertEquals(OrderStatusEnum.FINISHED.getCode(),result.getOrderStatus());
     }
 }

@@ -30,8 +30,9 @@ spring:
   jpa:
     show-sql: true
     open-in-view: false
+  jackson:
+    default-property-inclusion: non_null
 server:
   servlet:
     context-path: /sell
-
 
